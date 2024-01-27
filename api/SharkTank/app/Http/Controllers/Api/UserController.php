@@ -53,6 +53,7 @@ class UserController extends Controller
             "password" => $user->password,
             "image" => $user->image,
             "token" => $user->remember_token,
+
             "created" => $user->created_at, 
             "updated" => $user->updated_at
     
@@ -63,5 +64,92 @@ class UserController extends Controller
 
         return response()->json($object); 
     }
+    public function create(Request $request) {
+        $data = $request->validate([
+            'name'=> 'required|min:3,max:20',
+            'surname'=> 'required|min:3,max:20',
+            'email'=> 'required|min:3,max:20',
+            'phone'=> 'required|min:3,max:20',
+            'email_verified'=> 'required|min:3,max:20',
+            'password'=> 'required|min:3,max:20',
+            'image'=> 'required|min:3,max:20',
+            'token'=> 'required|min:3,max:20'
+            
+        ]);
+            
+        $user = User::create([
+            'name'=> $data['name'],
+            'surname'=> $data['surname'],
+            'email'=> $data['email'],
+            'phone'=> $data['phone'],
+            'email_verified'=> $data['email_verified'],
+            'password'=> $data['password'],
+            'image'=> $data['image'],
+            'token'=> $data['token']
+                
+        ]);
+    
+        if ($user) {
+            $object = [
+    
+                "response" => 'Succes.Item saved correctly.',
+                "data" => $user
+        
+            ];
+        
+            return response()->json($object);
+        }else {
+            $object = [
 
+                "response" => 'Error:Something went wrong, please try again.',
+        
+            ];
+        
+        return response()->json($object);
+        }
+    }
+    public function update(Request $request) {
+        $data = $request->validate([
+            'name'=> 'required|min:3,max:20',
+            'surname'=> 'required|min:3,max:20',
+            'email'=> 'required|min:3,max:20',
+            'phone'=> 'required|min:3,max:20',
+            'email_verified'=> 'required|min:3,max:20',
+            'password'=> 'required|min:3,max:20',
+            'image'=> 'required|min:3,max:20',
+            'token'=> 'required|min:3,max:20'
+            
+        ]);
+
+        $user = User::where('id', '=', $id)->first();
+            
+        $user->name = $data['name'];
+        $user->surname = $data['surname'];
+        $user->email = $data['email'];
+        $user->phone = $data['phone'];
+        $user->email_verified = $data['email_verified'];
+        $user->password = $data['password'];
+        $user->image = $data['image'];
+        $user->token = $data['token'];
+        
+        if ($user->update()) {
+            $object = [
+    
+                "response" => 'Succes.Item updated correctly.',
+                "data" => $user
+        
+            ];
+        
+            return response()->json($object);
+        }else {
+            $object = [
+
+                "response" => 'Error:Something went wrong, please try again.',
+        
+            ];
+        
+            return response()->json($object);
+
+        }
+    }
 }
