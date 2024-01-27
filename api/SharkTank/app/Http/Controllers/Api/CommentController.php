@@ -51,5 +51,74 @@ class CommentController extends Controller
 
         return response()->json($object); 
     }
+    public function create(Request $request) {
+            $data = $request->validate([
+                'post_id'=> 'required|min:3,max:20',
+                'user_id'=> 'required|min:3,max:20',
+                'content'=> 'required|min:3,max:20'
+                
+            ]);
+                
+            $comment = Comment::create([
+                'post_id'=> $data['post_id'],
+                'user_id'=> $data['user_id'],
+                'content'=> $data['content']
+                    
+            ]);
+        
+            if ($comment) {
+                $object = [
+        
+                    "response" => 'Succes.Item saved correctly.',
+                    "data" => $comment
+            
+                ];
+            
+                return response()->json($object);
+            }else {
+                $object = [
+    
+                    "response" => 'Error:Something went wrong, please try again.',
+            
+                ];
+            
+            return response()->json($object);
+            }
+        }
+        public function update(Request $request) {
+            $data = $request->validate([
+                'id' => 'required|integer|min:1',
+                'post_id'=> 'required|min:3,max:20',
+                'user_id'=> 'required|min:3,max:20',
+                'content'=> 'required|min:3,max:20'
+                
+            ]);
+
+            $comment = comment::where('id', '=', $id)->first();
+                
+            $comment->post_id = $data['post_id'];
+            $comment->user_id = $data['user_id'];
+            $comment->content = $data['content'];
+            
+            if ($comment->update()) {
+                $object = [
+        
+                    "response" => 'Succes.Item updated correctly.',
+                    "data" => $comment
+            
+                ];
+            
+                return response()->json($object);
+            }else {
+                $object = [
+    
+                    "response" => 'Error:Something went wrong, please try again.',
+            
+                ];
+            
+                return response()->json($object);
+
+        }
+    }
 }
 

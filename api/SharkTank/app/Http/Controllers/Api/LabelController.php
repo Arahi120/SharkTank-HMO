@@ -50,4 +50,71 @@ class LabelController extends Controller
 
         return response()->json($object); 
     }
+    public function create(Request $request) {
+        $data = $request->validate([
+            'name'=> 'required|min:3,max:20',
+            'description'=> 'required|min:3,max:20'
+            
+        ]);
+            
+        $label = Label::create([
+            'name'=> $data['name'],
+            'description'=> $data['description']
+                
+        ]);
+    
+        if ($label) {
+            $object = [
+    
+                "response" => 'Succes.Item saved correctly.',
+                "data" => $label
+        
+            ];
+        
+            return response()->json($object);
+        }else {
+            $object = [
+
+                "response" => 'Error:Something went wrong, please try again.',
+        
+            ];
+        
+            return response()->json($object);
+    }
+}
+
+    public function update(Request $request) {
+        $data = $request->validate([
+            'id' => 'required|integer|min:1',
+            'name'=> 'required|min:3,max:20',
+            'description'=> 'required|min:3,max:20'
+            
+        ]);
+
+        $label = label::where('id', '=', $id)->first();
+            
+        $label->name = $data['name'];
+        $label->description = $data['description'];
+        
+        if ($label->update()) {
+            $object = [
+    
+                "response" => 'Succes.Item updated correctly.',
+                "data" => $label
+        
+            ];
+        
+            return response()->json($object);
+        }else {
+            $object = [
+
+                "response" => 'Error:Something went wrong, please try again.',
+        
+            ];
+        
+            return response()->json($object);
+
+        }
+    
+    }
 }

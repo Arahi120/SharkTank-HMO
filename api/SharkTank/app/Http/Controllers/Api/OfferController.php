@@ -53,5 +53,73 @@ class OfferController extends Controller
 
         return response()->json($object); 
     }
+    public function create(Request $request) {
+        $data = $request->validate([
+            'post_id'=> 'required|min:3,max:20',
+            'investor_id'=> 'required|min:3,max:20',
+            'offer'=> 'required|min:3,max:20'
+            
+        ]);
+            
+        $offer = Offer::create([
+            'post_id'=> $data['post_id'],
+            'investor_id'=> $data['investor_id'],
+            'offer'=> $data['offer']
+                
+        ]);
+    
+        if ($offer) {
+            $object = [
+    
+                "response" => 'Succes.Item saved correctly.',
+                "data" => $offer
+        
+            ];
+        
+            return response()->json($object);
+        }else {
+            $object = [
 
+                "response" => 'Error:Something went wrong, please try again.',
+        
+            ];
+        
+        return response()->json($object);
+        }
+    }
+    public function update(Request $request) {
+        $data = $request->validate([
+            'id' => 'required|integer|min:1',
+            'post_id'=> 'required|min:3,max:20',
+            'investor_id'=> 'required|min:3,max:20',
+            'offer'=> 'required|min:3,max:20'
+            
+        ]);
+
+        $offer = offer::where('id', '=', $id)->first();
+            
+        $offer->post_id = $data['post_id'];
+        $offer->investor_id = $data['investor_id'];
+        $offer->offer = $data['offer'];
+        
+        if ($offer->update()) {
+            $object = [
+    
+                "response" => 'Succes.Item updated correctly.',
+                "data" => $offer
+        
+            ];
+        
+            return response()->json($object);
+        }else {
+            $object = [
+
+                "response" => 'Error:Something went wrong, please try again.',
+        
+            ];
+        
+            return response()->json($object);
+
+        }
+    }
 }
