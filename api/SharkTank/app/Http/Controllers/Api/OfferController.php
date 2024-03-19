@@ -96,7 +96,7 @@ class OfferController extends Controller
             
         ]);
 
-        $offer = offer::where('id', '=', $id)->first();
+        $offer = offer::where('id', '=', $data['id'])->first();
             
         $offer->post_id = $data['post_id'];
         $offer->investor_id = $data['investor_id'];

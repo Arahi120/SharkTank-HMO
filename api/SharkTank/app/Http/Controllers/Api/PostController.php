@@ -36,7 +36,35 @@ class PostController extends Controller
 
         return response()->json($list);
     }
+   
+    public function posts_users () {
 
+        $userId = $request->query('user_id');
+
+        $posts = Post::where('user_id', $userId)->get();
+
+        // Construir la respuesta JSON
+        $list = $posts->map(function($post) {
+            return [
+
+            "id" => $post->id,
+            "user_id" => $post->user_id,
+            "label_id" => $post->label_id,
+            "title" => $post->title,
+            "content" => $post->content,
+            "date" => $post->date,
+            "image" => $post->image,
+            "asking" => $post->asking,
+            "created" => $post->created_at, 
+            "updated" => $post->updated_at
+
+            ];
+            
+        });
+
+        return response()->json($list);
+    }
+    
     public function item ($id) {
 
         $post = Post::where('id','=', $id )->first();
@@ -56,10 +84,9 @@ class PostController extends Controller
 
             ];
 
-        
-
         return response()->json($object); 
     }
+    
     public function create(Request $request) {
         $data = $request->validate([
             'user_id'=> 'required|min:3,max:20',
@@ -114,7 +141,7 @@ class PostController extends Controller
             
         ]);
 
-        $post = post::where('id', '=', $id)->first();
+        $post = post::where('id', '=', $data['id'])->first();
             
         $post->user_id = $data['user_id'];
         $post->label_id = $data['label_id'];

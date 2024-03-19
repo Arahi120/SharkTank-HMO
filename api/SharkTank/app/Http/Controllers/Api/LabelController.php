@@ -91,7 +91,7 @@ class LabelController extends Controller
             
         ]);
 
-        $label = label::where('id', '=', $id)->first();
+        $label = label::where('id', '=', $data['id'])->first();
             
         $label->name = $data['name'];
         $label->description = $data['description'];

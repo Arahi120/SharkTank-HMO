@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AuthController;
+
 
 
 /*
@@ -42,6 +44,9 @@ Route::post('/comments/create', [CommentController::class, 'create']);
 Route::post('/comments/{id}/update', [CommentController::class, 'update']);
 
 Route::get('/posts', [PostController::class, 'list']);
+// posts de users
+Route::get('/posts/users', [PostController::class, 'posts_users']);
+
 Route::get('/posts/{id}', [PostController::class, 'item']);
 Route::post('/posts/create', [PostController::class, 'create']);
 Route::post('/posts/{id}/update', [PostController::class, 'update']);
@@ -52,6 +57,11 @@ Route::post('/offers/create', [OfferController::class, 'create']);
 Route::post('/offers/{id}/update', [OfferController::class, 'update']);
 
 Route::get('/users', [UserController::class, 'list']);
+Route::get('/users/profile/{id}', [UserController::class, 'userprofile']);
+Route::post('/users/updateprofile', [UserController::class, 'updateUserProfile']);
 Route::get('/users/{id}', [UserController::class, 'item']);
 Route::post('/users/create', [UserController::class, 'create']);
 Route::post('/users/{id}/update', [UserController::class, 'update']);
+
+Route::post('/login', [AuthController::class, 'login']);
+

@@ -104,7 +104,7 @@ class InvestorController extends Controller
             
         ]);
 
-        $investor = investor::where('id', '=', $id)->first();
+        $investor = investor::where('id', '=', $data['id'])->first();
             
         $investor->name = $data['name'];
         $investor->surname = $data['surname'];

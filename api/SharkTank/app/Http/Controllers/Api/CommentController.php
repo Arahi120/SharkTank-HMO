@@ -94,7 +94,7 @@ class CommentController extends Controller
                 
             ]);
 
-            $comment = comment::where('id', '=', $id)->first();
+            $comment = comment::where('id', '=', $data['id'])->first();
                 
             $comment->post_id = $data['post_id'];
             $comment->user_id = $data['user_id'];

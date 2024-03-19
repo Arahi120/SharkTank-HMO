@@ -10,146 +10,166 @@ class UserController extends Controller
 {
     public function list () {
 
-        $users = User::all();
+        $Users = User::all();
 
         $list = [];
 
-        foreach($users as $user){
+        foreach($Users as $User){
 
-            $object = [
+            $objetc = [
 
-            "id" => $user->id,
-            "name" => $user->name,
-            "surname" => $user->surname,
-            "email" => $user->email,
-            "phone" => $user->phone,
-            "email_verified" => $user->email_verified_at,
-            "password" => $user->password,
-            "image" => $user->image,
-            "token" => $user->remember_token,
-            "created" => $user->created_at, 
-            "updated" => $user->updated_at
+                "id" => $User->id,
+                "name" => $User->name,
+                "surname" => $User->surname,
+                "email" => $User->email,
+                "phone" => $User->phone,
+                "email_verified_at" => $User->email_verified_at,
+                "password" => $User->password,
+                "image" => $User->image,
+                "remember_token" => $User->remember_token
+
 
             ];
 
-            array_push($list,$object);
+            array_push($list,$objetc);
         }
-
         return response()->json($list);
     }
-
     public function item ($id) {
 
-        $user = User::where('id','=', $id )->first();
+        $User = User::where('id','=',$id)->first();
 
-            $object = [
+        $object = [
 
-                "id" => $user->id,
-            "name" => $user->name,
-            "surname" => $user->surname,
-            "email" => $user->email,
-            "phone" => $user->phone,
-            "email_verified" => $user->email_verified_at,
-            "password" => $user->password,
-            "image" => $user->image,
-            "token" => $user->remember_token,
+            "id" => $User->id,
+            "name" => $User->name,
+            "surname" => $User->surname,
+            "email" => $User->email,
+            "phone" => $User->phone,
+            "email_verified_at" => $User->email_verified_at,
+            "password" => $User->password,
+            "image" => $User->image,
+            "remember_token" => $User->remember_token
 
-            "created" => $user->created_at, 
-            "updated" => $user->updated_at
-    
+        ];
 
-            ];
+        return response()->json($object);
 
-        
-
-        return response()->json($object); 
     }
     public function create(Request $request) {
         $data = $request->validate([
-            'name'=> 'required|min:3,max:20',
-            'surname'=> 'required|min:3,max:20',
-            'email'=> 'required|min:3,max:20',
-            'phone'=> 'required|min:3,max:20',
-            'email_verified'=> 'required|min:3,max:20',
-            'password'=> 'required|min:3,max:20',
-            'image'=> 'required|min:3,max:20',
-            'token'=> 'required|min:3,max:20'
-            
+            'name'=> 'required|min:3,max:50',
+            'surname'=> 'required|min:3,max:50',
+            'email'=> 'required|min:1,max:50',
+            'phone'=> 'required|min:1,max:50',
+            'password'=> 'required|min:1,max:50',
+            'image'=> 'required|min:1,max:50'
         ]);
-            
-        $user = User::create([
+        
+        $User = User::create([
             'name'=> $data['name'],
             'surname'=> $data['surname'],
             'email'=> $data['email'],
             'phone'=> $data['phone'],
-            'email_verified'=> $data['email_verified'],
             'password'=> $data['password'],
-            'image'=> $data['image'],
-            'token'=> $data['token']
-                
+            'image'=> $data['image']
+
         ]);
-    
-        if ($user) {
+
+        if ($User) {
             $object = [
+
+                "response" => 'Succes.Itemsaved correctly.',
+                "data" => $User
     
-                "response" => 'Succes.Item saved correctly.',
-                "data" => $user
-        
             ];
-        
+    
             return response()->json($object);
         }else {
             $object = [
 
                 "response" => 'Error:Something went wrong, please try again.',
-        
+    
             ];
-        
-        return response()->json($object);
+    
+            return response()->json($object);
         }
+
     }
-    public function update(Request $request) {
+
+    public function update(Request $request){
         $data = $request->validate([
-            'name'=> 'required|min:3,max:20',
-            'surname'=> 'required|min:3,max:20',
-            'email'=> 'required|min:3,max:20',
-            'phone'=> 'required|min:3,max:20',
-            'email_verified'=> 'required|min:3,max:20',
-            'password'=> 'required|min:3,max:20',
-            'image'=> 'required|min:3,max:20',
-            'token'=> 'required|min:3,max:20'
+            'name'=> 'required|min:3,max:50',
+            'surname'=> 'required|min:3,max:50',
+            'email'=> 'required|min:1,max:50',
+            'phone'=> 'required|min:1,max:50',
+            'password'=> 'required|min:1,max:50',
+            'image'=> 'required|min:1,max:50'
             
         ]);
+        
+        $user = User::where("id","=", $data['id'])->first();
+        $user->name=$data['name'];
+        $user->surname=$data['surname'];
+        $user->email=$data['email'];
+        $user->phone=$data['phone'];
+        $user->password=$data['password'];
+        $user->image=$data['image'];
+        
+        if($user->update()){
+            $object =[
+            "response"=>'Sucess. Item update successfully.',
+            "data"=> $user
+            ];
 
-        $user = User::where('id', '=', $id)->first();
-            
+            return response()->json($object);
+        } else {
+            $object = [
+
+                "response" => 'Error:Something went wrong, please try again.',
+    
+            ];
+    
+            return response()->json($object);
+        }
+    }
+
+    public function userprofile($id) {
+        $user = User::find($id); // Obtener el usuario por su ID
+        
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'surname' => $user->surname,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'image' => $user->image,
+        ]);
+    }
+
+    public function updateUserProfile(Request $request) {
+        $user = Auth::user(); // Obtener el usuario autenticado
+        
+        $data = $request->validate([
+            'name' => 'required|min:3|max:50',
+            'surname' => 'required|min:3|max:50',
+            'phone' => 'required|min:1|max:50',
+            // Aquí puedes agregar más validaciones según tus requisitos
+        ]);
+
         $user->name = $data['name'];
         $user->surname = $data['surname'];
-        $user->email = $data['email'];
         $user->phone = $data['phone'];
-        $user->email_verified = $data['email_verified'];
-        $user->password = $data['password'];
-        $user->image = $data['image'];
-        $user->token = $data['token'];
-        
-        if ($user->update()) {
-            $object = [
-    
-                "response" => 'Succes.Item updated correctly.',
-                "data" => $user
-        
-            ];
-        
-            return response()->json($object);
-        }else {
-            $object = [
+        // Actualiza más campos según sea necesario
 
-                "response" => 'Error:Something went wrong, please try again.',
-        
-            ];
-        
-            return response()->json($object);
+        $user->save();
 
-        }
+        return response()->json(['message' => 'Perfil de usuario actualizado con éxito']);
     }
+
+
 }
