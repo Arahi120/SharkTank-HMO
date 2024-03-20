@@ -23,7 +23,9 @@ class InvestorController extends Controller
             "name" => $investor->name,
             "surname" => $investor->surname,
             "dob" => $investor->dob,
-            "image" => $investor->image,
+            "email" =>$investor->email,
+            "password" =>$investor->password,
+            "image" => $investor->image,    
             "description" => $investor->description,
             "created" => $investor->created_at, 
             "updated" => $investor->updated_at
@@ -46,6 +48,8 @@ class InvestorController extends Controller
             "name" => $investor->name,
             "surname" => $investor->surname,
             "dob" => $investor->dob,
+            "email" =>$investor->email,
+            "password" =>$investor->password,
             "image" => $investor->image,
             "description" => $investor->description,
             "created" => $investor->created_at, 
@@ -63,6 +67,8 @@ class InvestorController extends Controller
             'name'=> 'required|min:3,max:20',
             'surname'=> 'required|min:3,max:20',
             'dob'=> 'required|min:3,max:20',
+            'email'=> 'required|min:3,max:20',
+            'password'=> 'required|min:3,max:20',
             'image'=> 'required|min:3,max:20'
             
         ]);
@@ -71,6 +77,8 @@ class InvestorController extends Controller
             'name'=> $data['name'],
             'surname'=> $data['surname'],
             'dob'=> $data['dob'],
+            'email' => $data['email'],
+            'password' => $data['password'],
             'image'=> $data['image']
                 
         ]);
@@ -79,7 +87,7 @@ class InvestorController extends Controller
             $object = [
     
                 "response" => 'Succes.Item saved correctly.',
-                "data" => $comment
+                "data" => $investor
         
             ];
         
@@ -100,6 +108,8 @@ class InvestorController extends Controller
             'name'=> 'required|min:3,max:20',
             'surname'=> 'required|min:3,max:20',
             'dob'=> 'required|min:3,max:20',
+            'email'=> 'required|min:3,max:20',
+            'password'=> 'required|min:3,max:20',
             'image'=> 'required|min:3,max:20'
             
         ]);
@@ -109,6 +119,8 @@ class InvestorController extends Controller
         $investor->name = $data['name'];
         $investor->surname = $data['surname'];
         $investor->dob = $data['dob'];
+        $investor->email = $data['email'];
+        $investor->password = $data['password'];
         $investor->image = $data['image'];
         
         if ($investor->update()) {

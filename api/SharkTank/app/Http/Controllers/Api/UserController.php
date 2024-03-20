@@ -23,8 +23,7 @@ class UserController extends Controller
                 "surname" => $User->surname,
                 "email" => $User->email,
                 "phone" => $User->phone,
-                "email_verified_at" => $User->email_verified_at,
-                "password" => $User->password,
+                "email_verified_at" => $User->email_verified_at,        
                 "image" => $User->image,
                 "remember_token" => $User->remember_token
 
@@ -46,8 +45,7 @@ class UserController extends Controller
             "surname" => $User->surname,
             "email" => $User->email,
             "phone" => $User->phone,
-            "email_verified_at" => $User->email_verified_at,
-            "password" => $User->password,
+            "email_verified_at" => $User->email_verified_at,            
             "image" => $User->image,
             "remember_token" => $User->remember_token
 
