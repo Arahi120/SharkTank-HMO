@@ -117,4 +117,28 @@ class LabelController extends Controller
         }
     
     }
+    
+    public function delete($id)
+    {
+        // Buscar el label por ID
+        $label = Label::find($id);
+
+        // Verificar si el label existe
+        if (!$label) {
+            return response()->json([
+                "response" => "Error: Label not found."
+            ], 404); // Si el label no existe, devuelve un error 404
+        }
+
+        // Eliminar el label
+        if ($label->delete()) {
+            return response()->json([
+                "response" => "Success. Label deleted successfully."
+            ]);
+        } else {
+            return response()->json([
+                "response" => "Error: Something went wrong, please try again."
+            ], 500); // Si hay un error en la base de datos, devuelve un error 500
+        }
+    }
 }

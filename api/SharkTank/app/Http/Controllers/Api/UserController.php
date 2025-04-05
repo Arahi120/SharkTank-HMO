@@ -61,6 +61,7 @@ class UserController extends Controller
             'email'=> 'required|min:1,max:50',
             'phone'=> 'required|min:1,max:50',
             'password'=> 'required|min:1,max:50',
+            'level_id'=> 'required|min:1,max:50',
             'image'=> 'required|min:1,max:50'
         ]);
         
@@ -70,6 +71,7 @@ class UserController extends Controller
             'email'=> $data['email'],
             'phone'=> $data['phone'],
             'password'=> $data['password'],
+            'level_id'=>$data['level_id'],
             'image'=> $data['image']
 
         ]);
@@ -96,41 +98,49 @@ class UserController extends Controller
     }
 
     public function update(Request $request){
+        // Validar los datos de entrada
         $data = $request->validate([
-            'name'=> 'required|min:3,max:50',
-            'surname'=> 'required|min:3,max:50',
-            'email'=> 'required|min:1,max:50',
-            'phone'=> 'required|min:1,max:50',
-            'password'=> 'required|min:1,max:50',
-            'image'=> 'required|min:1,max:50'
-            
+            'id' => 'required|integer', // Asegurarse de que el ID es válido
+            'name' => 'required|min:3|max:50',
+            'surname' => 'required|min:3|max:50',
+            'email' => 'required|min:1|max:50',
+            'phone' => 'required|min:1|max:50',
+            'password' => 'required|min:1|max:50', // No olvidar validar la contraseña
+            'level_id' => 'required|min:1,max:50',
+            'image' => 'required|min:1,max:50'
         ]);
+    
+        // Buscar el usuario por ID
+        $user = User::find($data['id']);
         
-        $user = User::where("id","=", $data['id'])->first();
-        $user->name=$data['name'];
-        $user->surname=$data['surname'];
-        $user->email=$data['email'];
-        $user->phone=$data['phone'];
-        $user->password=$data['password'];
-        $user->image=$data['image'];
-        
-        if($user->update()){
-            $object =[
-            "response"=>'Sucess. Item update successfully.',
-            "data"=> $user
-            ];
-
-            return response()->json($object);
+        if (!$user) {
+            return response()->json([
+                'response' => 'Error: User not found.'
+            ], 404); // Si el usuario no existe, devuelve un error 404
+        }
+    
+        // Actualizar los campos del usuario
+        $user->name = $data['name'];
+        $user->surname = $data['surname'];
+        $user->email = $data['email'];
+        $user->phone = $data['phone'];
+        $user->password = bcrypt($data['password']); // Asegúrate de cifrar la contraseña
+        $user->level_id = $data['level_id'];
+        $user->image = $data['image'];
+    
+        // Guardar la actualización
+        if ($user->save()) {
+            return response()->json([
+                'response' => 'Success. Item updated successfully.',
+                'data' => $user
+            ]);
         } else {
-            $object = [
-
-                "response" => 'Error:Something went wrong, please try again.',
-    
-            ];
-    
-            return response()->json($object);
+            return response()->json([
+                'response' => 'Error: Something went wrong, please try again.'
+            ], 500); // Si hay un error en la base de datos, devuelve un error 500
         }
     }
+    
 
     public function userprofile($id) {
         $user = User::find($id); // Obtener el usuario por su ID
@@ -169,5 +179,28 @@ class UserController extends Controller
         return response()->json(['message' => 'Perfil de usuario actualizado con éxito']);
     }
 
+    public function delete($id)
+    {
+        // Buscar el usuario por ID
+        $user = User::find($id);
+
+        // Verificar si el usuario existe
+        if (!$user) {
+            return response()->json([
+                'response' => 'Error: User not found.'
+            ], 404); // Si el usuario no existe, devuelve un error 404
+        }
+
+        // Eliminar el usuario
+        if ($user->delete()) {
+            return response()->json([
+                'response' => 'Success. User deleted successfully.'
+            ]);
+        } else {
+            return response()->json([
+                'response' => 'Error: Something went wrong, please try again.'
+            ], 500); // Si hay un error en la base de datos, devuelve un error 500
+        }
+    }
 
 }

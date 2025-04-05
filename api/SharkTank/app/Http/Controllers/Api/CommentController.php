@@ -53,8 +53,8 @@ class CommentController extends Controller
     }
     public function create(Request $request) {
             $data = $request->validate([
-                'post_id'=> 'required|min:3,max:20',
-                'user_id'=> 'required|min:3,max:20',
+                'post_id'=> 'required|integer|min:1',
+                'user_id'=> 'required|integer|min:1',
                 'content'=> 'required|min:3,max:20'
                 
             ]);
@@ -88,8 +88,8 @@ class CommentController extends Controller
         public function update(Request $request) {
             $data = $request->validate([
                 'id' => 'required|integer|min:1',
-                'post_id'=> 'required|min:3,max:20',
-                'user_id'=> 'required|min:3,max:20',
+                'post_id'=> 'required|integer|min:1',
+                'user_id'=> 'required|integer|min:1',
                 'content'=> 'required|min:3,max:20'
                 
             ]);
@@ -118,6 +118,29 @@ class CommentController extends Controller
             
                 return response()->json($object);
 
+        }
+    }
+    public function delete($id)
+    {
+        // Buscar el comentario por ID
+        $comment = Comment::find($id);
+
+        // Verificar si el comentario existe
+        if (!$comment) {
+            return response()->json([
+                "response" => "Error: Comment not found."
+            ], 404); // Si el comentario no existe, devuelve un error 404
+        }
+
+        // Eliminar el comentario
+        if ($comment->delete()) {
+            return response()->json([
+                "response" => "Success. Comment deleted successfully."
+            ]);
+        } else {
+            return response()->json([
+                "response" => "Error: Something went wrong, please try again."
+            ], 500); // Si hay un error en la base de datos, devuelve un error 500
         }
     }
 }

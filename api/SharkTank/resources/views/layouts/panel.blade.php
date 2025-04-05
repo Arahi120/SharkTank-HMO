@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     
@@ -17,7 +15,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand -->
-            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="index.html">STHmo</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -46,10 +44,31 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="{{ route('post.index') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
+                                Posts
                             </a>
+                            <a class="nav-link" href="{{ route('offer.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
+                                Offers
+                            </a>
+                            <a class="nav-link" href="{{ route('label.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-label"></i></div>
+                                Labels
+                            </a>
+                            <a class="nav-link" href="{{ route('investor.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                Investors
+                            </a>
+                            <a class="nav-link" href="{{ route('comment.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-comments"></i></div>
+                                Comments
+                            </a>
+                            <a class="nav-link" href="{{ route('user.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-circle"></i></div>
+                                Users
+                            </a>
+
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -62,6 +81,7 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>
                             </div>
+
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Pages
@@ -115,7 +135,6 @@
                     <div class="container-fluid px-4">
                         @yield('comment')
                         @yield('content')
-                       
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

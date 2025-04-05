@@ -9,6 +9,9 @@ class Label extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','description'];
-
+    // Especificamos los campos que son asignables masivamente
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 }

@@ -143,4 +143,28 @@ class InvestorController extends Controller
 
         }
     }
+        
+    public function delete($id)
+    {
+        // Buscar el inversor por ID
+        $investor = Investor::find($id);
+
+        // Verificar si el inversor existe
+        if (!$investor) {
+            return response()->json([
+                "response" => "Error: Investor not found."
+            ], 404); // Si el inversor no existe, devuelve un error 404
+        }
+
+        // Eliminar el inversor
+        if ($investor->delete()) {
+            return response()->json([
+                "response" => "Success. Investor deleted successfully."
+            ]);
+        } else {
+            return response()->json([
+                "response" => "Error: Something went wrong, please try again."
+            ], 500); // Si hay un error en la base de datos, devuelve un error 500
+        }
+    }
 }

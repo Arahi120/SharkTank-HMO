@@ -7,20 +7,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    @vite(['resources/css/styles.css'])
-    @vite(['resources/img/apple-icon.png'])
-    <!-- <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-icon.png') }}"> -->
-    @vite(['resources/img/favicon.ico'])
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}"> -->
-
-    @vite(['resources/css/bootstrap.min.css'])
-    @vite(['resources/css/templatemo.min.css'])
-    @vite(['resources/css/custom.min.css'])
     
+    @vite([
+        'resources/css/styles.css',
+        'resources/css/bootstrap.min.css',
+        'resources/css/custom.min.css',
+        'resources/css/fontawesome.css',
+        'resources/css/templatemo.min.css',
+        'resources/css/fontawesome.min.css',
+    ])
 
-    <!-- Load fonts style after rendering the layout styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    @vite(['resources/css/fontawesome.min.css'])
+    <!-- Load fonts style after rendering the layout styles -
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">-->
+    
     
 
 <!--
@@ -45,8 +44,7 @@ https://templatemo.com/tm-559-zay-shop
                 <div>
                     <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
                     <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>                       
                 </div>
             </div>
         </div>
@@ -76,7 +74,7 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" href="about.html">Post</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Login</a>
+                            <a class="nav-link" href="{{route('login')}}">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('dashboard')}}">Admin</a>
@@ -158,7 +156,7 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/DroneDeliveryBackpack.png" alt="">
+                            <img class="img-fluid" src="./assets/img/DroneDeliveryBackpack.jpg" alt="">
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
@@ -229,7 +227,7 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="shop-single.html">
-                            <img src="./resources/img/SmartHomePlantMonitor.jpg" class="card-img-top" alt="...">
+                        <img class="img-fluid" src="./assets/img/SmartHomePlantMonitor.jpg" alt="">
                         </a>
                         <div class="card-body">
                             <ul class="list-unstyled d-flex justify-content-between">
@@ -241,7 +239,7 @@ https://templatemo.com/tm-559-zay-shop
                                     <i class="text-muted fa fa-star"></i>
                                     <i class="text-muted fa fa-star"></i>
                                 </li>
-                                -->
+-->
                                 <li class="text-muted text-right">$240.00</li>
                             </ul>
                             <a href="shop-single.html" class="h2 text-decoration-none text-dark">Smart Home Plant Monitor</a>
@@ -255,7 +253,9 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="shop-single.html">
-                            <img src="./assets/img/GravityDefyingLevitatingLamp.jpg" class="card-img-top" alt="...">
+                            
+                            <img class="img-fluid" src="./assets/img/GravityDefyingLevitatingLamp.jpg" alt="">
+                          
                         </a>
                         <div class="card-body">
                             <ul class="list-unstyled d-flex justify-content-between">
@@ -281,7 +281,8 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="shop-single.html">
-                            <img src="./assets/img/MindfulMeditationChair.jpg" class="card-img-top" alt="...">
+                            
+                        <img class="img-fluid" src="./assets/img/MindfulMeditationChair.jpg" alt="">
                         </a>
                         <div class="card-body">
                             <ul class="list-unstyled d-flex justify-content-between">

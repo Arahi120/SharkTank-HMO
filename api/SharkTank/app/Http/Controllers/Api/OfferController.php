@@ -55,9 +55,9 @@ class OfferController extends Controller
     }
     public function create(Request $request) {
         $data = $request->validate([
-            'post_id'=> 'required|min:3,max:20',
-            'investor_id'=> 'required|min:3,max:20',
-            'offer'=> 'required|min:3,max:20'
+            'post_id'=> 'required|integer|min:1',
+            'investor_id'=> 'required|integer|min:1',
+            'offer'=> 'required|min:1,max:20'
             
         ]);
             
@@ -90,9 +90,9 @@ class OfferController extends Controller
     public function update(Request $request) {
         $data = $request->validate([
             'id' => 'required|integer|min:1',
-            'post_id'=> 'required|min:3,max:20',
-            'investor_id'=> 'required|min:3,max:20',
-            'offer'=> 'required|min:3,max:20'
+            'post_id'=> 'required|integer|min:1',
+            'investor_id'=> 'required|integer|min:1',
+            'offer'=> 'required|min:1,max:20'
             
         ]);
 
@@ -120,6 +120,30 @@ class OfferController extends Controller
         
             return response()->json($object);
 
+        }
+    }
+
+    public function delete($id)
+    {
+        // Buscar la oferta por ID
+        $offer = Offer::find($id);
+
+        // Verificar si la oferta existe
+        if (!$offer) {
+            return response()->json([
+                "response" => "Error: Offer not found."
+            ], 404); // Si la oferta no existe, devuelve un error 404
+        }
+
+        // Eliminar la oferta
+        if ($offer->delete()) {
+            return response()->json([
+                "response" => "Success. Offer deleted successfully."
+            ]);
+        } else {
+            return response()->json([
+                "response" => "Error: Something went wrong, please try again."
+            ], 500); // Si hay un error en la base de datos, devuelve un error 500
         }
     }
 }
